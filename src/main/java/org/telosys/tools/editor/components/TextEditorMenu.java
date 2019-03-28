@@ -1,4 +1,4 @@
-package texteditor;
+package org.telosys.tools.editor.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +21,8 @@ public class TextEditorMenu {
 		menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
 		menuBar.add(createEditMenu());
-		//menuBar.add(createViewMenu());
+		menuBar.add(createToolsMenu());
+		menuBar.add(createHelpMenu());
 	}
 	
 	protected JMenuBar getMenuBar() {
@@ -128,20 +129,41 @@ public class TextEditorMenu {
 
 		return menu;
 	}
+	
+	private JMenu createToolsMenu() {
+		JMenu menu = new JMenu("Tools"); 
+		menu.setMnemonic(KeyEvent.VK_T);
 
-	private JMenu createViewMenu() {
-		JMenu menu = new JMenu("View"); 
-
-		JMenuItem statusMenuItem = new JMenuItem("Status");
-//		xxx.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-//		xxx.addActionListener(new ActionListener() {
+		JMenuItem menuItem = new JMenuItem("Tool1");
+//		cutI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+//		cutI.addActionListener(new ActionListener() {
 //		    public void actionPerformed(ActionEvent ev) {
-//				pad = textArea.getSelectedText();
-//				textArea.replaceRange("", textArea.getSelectionStart(), textArea.getSelectionEnd());
+//				//pad = textArea.getSelectedText();
+//				//textArea.replaceRange("", textArea.getSelectionStart(), textArea.getSelectionEnd());
+//				editor.actionCut();
 //		      }		
 //		});
-		menu.add(statusMenuItem);
-
+		menu.add(menuItem);
+		
 		return menu;
 	}
+
+	private JMenu createHelpMenu() {
+		JMenu menu = new JMenu("Help"); 
+		menu.setMnemonic(KeyEvent.VK_H);
+
+		JMenuItem menuItem = new JMenuItem("About");
+//		cutI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+//		cutI.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent ev) {
+//				//pad = textArea.getSelectedText();
+//				//textArea.replaceRange("", textArea.getSelectionStart(), textArea.getSelectionEnd());
+//				editor.actionCut();
+//		      }		
+//		});
+		menu.add(menuItem);
+		
+		return menu;
+	}
+
 }

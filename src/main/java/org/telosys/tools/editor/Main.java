@@ -1,4 +1,4 @@
-package texteditor;
+package org.telosys.tools.editor;
 
 import java.io.BufferedReader;
 import java.io.IOException;

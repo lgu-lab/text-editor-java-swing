@@ -1,4 +1,4 @@
-package texteditor;
+package org.telosys.tools.editor.old;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

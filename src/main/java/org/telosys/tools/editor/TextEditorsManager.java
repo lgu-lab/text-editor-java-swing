@@ -1,6 +1,8 @@
-package texteditor;
+package org.telosys.tools.editor;
 
 import java.util.Hashtable;
+
+import org.telosys.tools.editor.components.TextEditor;
 
 public class TextEditorsManager {
 
@@ -17,7 +19,10 @@ public class TextEditorsManager {
 		}
 		else {
 			id++ ;
-			editors.put(fileFullPath, new TextEditor(fileFullPath));
+			TextEditor newEditor = new TextEditor(fileFullPath);
+			editors.put(fileFullPath, newEditor);
+			newEditor.setState(java.awt.Frame.NORMAL);
+			newEditor.setVisible(true);
 			return id;
 		}
 	}

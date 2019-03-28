@@ -1,4 +1,4 @@
-package texteditor;
+package org.telosys.tools.editor.components;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -21,7 +21,9 @@ import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
@@ -33,11 +35,12 @@ public class TextEditor extends JFrame {
 
 	private final JFrame    frame ;
 	private final JTextArea textArea ;
+	private final JLabel    bottomLabel;
+
 	private final DocumentListener documentListener ; 
 
 	private File      file = null ;
 	private boolean   textChanged = false ;
-	//private Charset   charset = Charset.forName("UTF-8");
 	private Charset   charset = StandardCharsets.UTF_8 ;
 
 	
@@ -93,6 +96,12 @@ public class TextEditor extends JFrame {
 
 		container.add(scrollPane, BorderLayout.CENTER);
 		
+		//--- Bottom label 
+		bottomLabel = new JLabel("Bottom label ");
+		JPanel panel = new JPanel();
+		panel.add(bottomLabel);
+		this.getContentPane().add(panel, BorderLayout.SOUTH);
+		
 		//--- The DocumentListener that will be used for each file
 		documentListener = new TextEditorListener(this);
 		
@@ -102,6 +111,33 @@ public class TextEditor extends JFrame {
 		loadFile(file);
 
 		this.setVisible(true);
+	}
+	@Override
+	public void setVisible(final boolean visible) {
+//	  // make sure that frame is marked as not disposed if it is asked to be visible
+//	  if (visible) {
+//	      super.setDisposed(false);
+//	  }
+	  
+	  // let's handle visibility...
+	  if (!visible || !isVisible()) { // have to check this condition simply because super.setVisible(true) invokes toFront if frame was already visible
+	      super.setVisible(visible);
+	  }
+	  // ...and bring frame to the front.. in a strange and weird way
+	  if (visible) {
+		  putOnFront();
+	  }
+	}
+
+	public void putOnFront() {
+	  super.setVisible(true);
+	  int state = super.getExtendedState();
+	  state &= ~JFrame.ICONIFIED;
+	  super.setExtendedState(state);
+	  super.setAlwaysOnTop(true);
+	  super.toFront();
+	  super.requestFocus();
+	  super.setAlwaysOnTop(false);
 	}
 	
 	private void initFonts() {

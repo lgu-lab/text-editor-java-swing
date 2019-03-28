@@ -1,4 +1,4 @@
-package texteditor;
+package org.telosys.tools.editor.components;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
