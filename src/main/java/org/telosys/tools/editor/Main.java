@@ -1,13 +1,14 @@
 package org.telosys.tools.editor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// Open a text editor
+		// Open a text editor 
 //		System.out.println("1rst text editor ");
 //		new TextEditor("My title");
 //		
@@ -33,7 +34,7 @@ public class Main {
                 String input = br.readLine();
 
                 if ("open".equals(input)) {
-            		editorsManager.openTextEditor("D:/TMP/foo.txt");
+            		editorsManager.openTextEditor(new File("D:/TMP/foo.txt") );
                 }
 
                 if ("q".equals(input)) {

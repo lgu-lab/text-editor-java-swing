@@ -22,13 +22,15 @@ public class TextEditorListener implements DocumentListener {
 	@Override
 	public void insertUpdate(DocumentEvent event) {
 		//System.out.println("insertUpdate");
-		editor.textChanged();		
+//		editor.textChanged();	
+		// TODO
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent event) {
 		//System.out.println("removeUpdate");
-		editor.textChanged();		
+//		editor.textChanged();		
+		// TODO
 	}
 
 }

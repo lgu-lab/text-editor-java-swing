@@ -46,7 +46,8 @@ public class TextEditorMenu {
 		reloadMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); // Ctrl-L
 		reloadMenuItem.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
-				editor.actionLoad();
+//				editor.actionLoad();
+				// TODO
 		      }		
 		});
 		menu.add(reloadMenuItem);
@@ -55,7 +56,8 @@ public class TextEditorMenu {
 		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); // Ctrl-S
 		saveMenuItem.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
-				editor.actionSave();
+//				editor.actionSave();
+				// TODO
 		      }		
 		});
 		menu.add(saveMenuItem);
@@ -153,14 +155,13 @@ public class TextEditorMenu {
 		menu.setMnemonic(KeyEvent.VK_H);
 
 		JMenuItem menuItem = new JMenuItem("About");
-//		cutI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-//		cutI.addActionListener(new ActionListener() {
-//		    public void actionPerformed(ActionEvent ev) {
-//				//pad = textArea.getSelectedText();
-//				//textArea.replaceRange("", textArea.getSelectionStart(), textArea.getSelectionEnd());
-//				editor.actionCut();
-//		      }		
-//		});
+//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				new AboutDialog();
+			}
+		});
+		
 		menu.add(menuItem);
 		
 		return menu;
