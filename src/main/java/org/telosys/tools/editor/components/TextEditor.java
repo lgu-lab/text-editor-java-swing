@@ -21,38 +21,34 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
 
+/**
+ * Text editor ( JFrame specialization )
+ * 
+ * @author laguerin
+ *
+ */
 public class TextEditor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
 	private final FileManager  fileManager = new FileManager();
 
-	private final JFrame    frame ;
-//	private final JTextArea textArea ;
-	private final JTabbedPane tabbedPane;
-//	private final ArrayList<TextEditorPane> documents = new ArrayList<TextEditorPane>();
+	private final File         currentDir ;
 
-	private final File currentDir ;
-
-	private final JLabel    bottomLabel;
+	private final JFrame       frame ;
+	private final JTabbedPane  tabbedPane;
+	private final JLabel       bottomLabel;
 
 	private final DocumentListener documentListener ; 
 
-//	private File      file = null ;
-//	private boolean   textChanged = false ;
-//	private Charset   charset = StandardCharsets.UTF_8 ;
-
-	
 	private void log(String msg) {
 		System.out.println("LOG : " + msg);
 	}
 
-//	public TextEditor(String absoluteFileName) {
 	public TextEditor(File absoluteDirPath) {
 		super();
 		frame = this ;
 		
-		//setCurrentFile(new File(absoluteFileName));
 		currentDir = absoluteDirPath ;
 		
 		setSize(600, 600);
@@ -84,20 +80,6 @@ public class TextEditor extends JFrame {
 //		JToolBar toolBar = new JToolBar();
 //		pane.add(toolBar, BorderLayout.SOUTH);
 		
-//		//--- Content 
-//		Container container = getContentPane();
-//		container.setLayout(new BorderLayout());
-//		
-//		//--- Text area for edition
-//		textArea = new JTextArea(); // textarea
-//		textArea.setLineWrap(true);
-//		textArea.setWrapStyleWord(true);
-//
-//		JScrollPane scrollPane = new JScrollPane(textArea); // scrollpane and add textarea to scrollpane
-//
-//		container.add(scrollPane, BorderLayout.CENTER);
-
-		
 		//--- Central panel with tabs
 		JPanel centralPanel = new JPanel(new BorderLayout());
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -126,10 +108,9 @@ public class TextEditor extends JFrame {
 		//--- Frame icon
 		this.setIconImage("icons/telosys_32.png");
 
-//		loadFile(file);
-
 		this.setVisible(true);
 	}
+	
 	@Override
 	public void setVisible(final boolean visible) {
 //	  // make sure that frame is marked as not disposed if it is asked to be visible
@@ -147,19 +128,11 @@ public class TextEditor extends JFrame {
 	  }
 	}
 	
-//	private void tabExamples() {
-//		
-//		String s = tabbedPane.getTitleAt(2);
-//		
-//		Component c = tabbedPane.getComponentAt(2);
-//		
-//		// select the last tab
-//        tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
-//        
-//        
-//		int selectedIndex = tabbedPane.getSelectedIndex();
-//	}
-
+	/**
+	 * Returns the index of the tab containing the given file (or -1 if none)
+	 * @param file
+	 * @return
+	 */
 	public int getFileTabIndex(File file) {
 		for ( int i = 0 ; i < tabbedPane.getTabCount() ; i++ ) {
 			Component c = tabbedPane.getComponentAt(i);
@@ -175,6 +148,11 @@ public class TextEditor extends JFrame {
 		return -1 ;
 	}
 	
+	/**
+	 * Edit the given file <br>
+	 * Create a new tab if the file is not already loaded or select the tab containing the file
+	 * @param file
+	 */
 	public void editFile(File file) {
 		
 		int tabIndex = getFileTabIndex(file);
@@ -357,11 +335,27 @@ public class TextEditor extends JFrame {
 	}
 	
 	protected void actionClose() {
-		if ( JOptionPane.showConfirmDialog(null, "Fermer ?", "Title", JOptionPane.YES_NO_OPTION ) == 0 ) {
+		if ( JOptionPane.showConfirmDialog(null, "Close ?", "Title", JOptionPane.YES_NO_OPTION ) == 0 ) {
 			frame.dispose();
 		}
 	}
-	protected void actionPaste() {
+	protected void actionExit() {
+//		if ( JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ?", "Confirm Exit", JOptionPane.YES_NO_OPTION ) == 0 ) {
+//			
+//		}
+		
+		Object[] options = { "Exit", "Cancel" };
+		int choice = JOptionPane.showOptionDialog(null, "Are you sure you want to exit ?", "Confirm Exit",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null, //do not use a custom Icon
+				options, //the titles of buttons
+				options[1] ); //default button title
+	    if ( choice == 0 ) {
+			frame.dispose();
+	    }
+	}
+	protected void actionPaste() { 
 		//textArea.paste();
 //		documents.get(tabbedPane.getSelectedIndex()).paste(true);
 		// TODO

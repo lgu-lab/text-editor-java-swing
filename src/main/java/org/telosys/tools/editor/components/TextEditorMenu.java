@@ -80,6 +80,16 @@ public class TextEditorMenu {
 		});
 		menu.add(closeMenuItem);
 
+		menu.addSeparator();
+		
+		JMenuItem exitMenuItem = new JMenuItem("Exit"); 
+		exitMenuItem.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+				editor.actionExit();
+		      }		
+		});
+		menu.add(exitMenuItem);
+
 		return menu;
 	}
 
