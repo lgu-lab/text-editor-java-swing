@@ -89,8 +89,12 @@ public class TextEditor extends JFrame {
 	        public void stateChanged(ChangeEvent e) {
 	            //System.out.println("Tab: " + tabbedPane.getSelectedIndex());
 	    		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-	    		bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
-//	    		bottomLabel.setText("selected index : " + tabbedPane.getSelectedIndex());	            
+	    		if ( scrollPane != null ) {
+		    		bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
+	    		}
+	    		else {
+		    		bottomLabel.setText("");
+	    		}
 	        }
 	    });		
 		centralPanel.add(tabbedPane, BorderLayout.CENTER);
@@ -335,17 +339,26 @@ public class TextEditor extends JFrame {
 	}
 	
 	protected void actionClose() {
-		if ( JOptionPane.showConfirmDialog(null, "Close ?", "Title", JOptionPane.YES_NO_OPTION ) == 0 ) {
-			frame.dispose();
-		}
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		// scrollPane.modified ?
+		tabbedPane.remove(scrollPane);
+//		if ( JOptionPane.showConfirmDialog(null, "Close ?", "Title", JOptionPane.YES_NO_OPTION ) == 0 ) {
+//			frame.dispose();
+//		}
 	}
+	
+	/**
+	 * Exit editor
+	 */
 	protected void actionExit() {
 //		if ( JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ?", "Confirm Exit", JOptionPane.YES_NO_OPTION ) == 0 ) {
 //			
 //		}
 		
 		Object[] options = { "Exit", "Cancel" };
-		int choice = JOptionPane.showOptionDialog(null, "Are you sure you want to exit ?", "Confirm Exit",
+		int choice = JOptionPane.showOptionDialog(null, 
+				"Are you sure you want to exit ?", 
+				"Confirm Exit",
 				JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
 				null, //do not use a custom Icon

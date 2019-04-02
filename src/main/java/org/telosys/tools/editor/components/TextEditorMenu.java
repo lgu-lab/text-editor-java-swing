@@ -75,7 +75,7 @@ public class TextEditorMenu {
 		JMenuItem closeMenuItem = new JMenuItem("Close"); 
 		closeMenuItem.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
-				editor.actionClose();
+				editor.actionClose(); 
 		      }		
 		});
 		menu.add(closeMenuItem);
