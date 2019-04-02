@@ -65,8 +65,9 @@ public class TextEditor extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
 		this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){            	
-            	log("windowClosing");
-            	actionClose();
+//            	log("windowClosing");
+//            	actionClose();
+            	actionExit();
             }
         });
 		
@@ -111,6 +112,7 @@ public class TextEditor extends JFrame {
 		
 		//--- Frame icon
 		this.setIconImage("icons/telosys_32.png");
+		this.setTitle("Telosys Editor");
 
 		this.setVisible(true);
 	}
