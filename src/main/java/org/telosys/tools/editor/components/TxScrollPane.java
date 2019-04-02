@@ -5,6 +5,13 @@ import java.io.Serializable;
 
 import javax.swing.JScrollPane;
 
+/**
+ * 
+ * JScrollPane specialization to keep the file the tab title
+ * 
+ * @author laguerin
+ *
+ */
 public class TxScrollPane extends JScrollPane implements Serializable {
 
 	private static final long serialVersionUID = 1L;

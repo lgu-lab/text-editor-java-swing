@@ -33,8 +33,14 @@ public class Main {
                 System.out.print("Enter something : ");
                 String input = br.readLine();
 
-                if ("open".equals(input)) {
+                if ("foo".equals(input)) {
             		editorsManager.openTextEditor(new File("D:/TMP/foo.txt") );
+                }
+                if ("aaa".equals(input)) {
+            		editorsManager.openTextEditor(new File("D:/TMP/aaa.txt") );
+                }
+                if ("bbb".equals(input)) {
+            		editorsManager.openTextEditor(new File("D:/TMP/bbb.txt") );
                 }
 
                 if ("q".equals(input)) {

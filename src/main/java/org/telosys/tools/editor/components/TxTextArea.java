@@ -9,7 +9,9 @@ import java.io.Serializable;
 import javax.swing.JTextArea;
 
 /**
- * 
+ * JTextArea specialization
+
+ * @author laguerin
  *
  */
 public class TxTextArea extends JTextArea implements Serializable {

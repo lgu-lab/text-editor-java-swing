@@ -1,4 +1,4 @@
-package org.telosys.tools.editor.components;
+package org.telosys.tools.editor.old;
 
 import java.awt.Color;
 import java.awt.Font;

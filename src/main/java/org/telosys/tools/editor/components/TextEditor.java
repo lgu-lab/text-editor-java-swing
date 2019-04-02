@@ -7,7 +7,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.swing.ImageIcon;
@@ -16,9 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
 
 public class TextEditor extends JFrame {
@@ -103,6 +103,14 @@ public class TextEditor extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		//tabbedPane.addChangeListener(new TabListener());
 		// centralPanel.add(toolBar, BorderLayout.NORTH);
+	    tabbedPane.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	            //System.out.println("Tab: " + tabbedPane.getSelectedIndex());
+	    		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+	    		bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
+//	    		bottomLabel.setText("selected index : " + tabbedPane.getSelectedIndex());	            
+	        }
+	    });		
 		centralPanel.add(tabbedPane, BorderLayout.CENTER);
 		this.add(centralPanel, BorderLayout.CENTER);
 		
@@ -139,59 +147,73 @@ public class TextEditor extends JFrame {
 	  }
 	}
 	
-	private void tabExamples() {
-		
-		String s = tabbedPane.getTitleAt(2);
-		
-		Component c = tabbedPane.getComponentAt(2);
-		
-		// select the last tab
-        tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
-        
-        
-		int selectedIndex = tabbedPane.getSelectedIndex();
-	}
+//	private void tabExamples() {
+//		
+//		String s = tabbedPane.getTitleAt(2);
+//		
+//		Component c = tabbedPane.getComponentAt(2);
+//		
+//		// select the last tab
+//        tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
+//        
+//        
+//		int selectedIndex = tabbedPane.getSelectedIndex();
+//	}
 
-	public void getFileTabIndex(File file) {
+	public int getFileTabIndex(File file) {
 		for ( int i = 0 ; i < tabbedPane.getTabCount() ; i++ ) {
 			Component c = tabbedPane.getComponentAt(i);
 			bottomLabel.setText(i + " : Component class " + c.getClass().getSimpleName());
-			if ( c instanceof JScrollPane ) {
-				JScrollPane scrollPane = (JScrollPane) c ;
-				
+			if ( c instanceof TxScrollPane ) {
+				TxScrollPane scrollPane = (TxScrollPane) c ;
+				if ( file.getAbsolutePath().equals(scrollPane.getFile().getAbsolutePath()) ) {
+					// File found (this file is already loaded in tab 'i')
+					return i ;
+				}
 			}
 		}
+		return -1 ;
 	}
 	
 	public void editFile(File file) {
 		
-		getFileTabIndex(file);
+		int tabIndex = getFileTabIndex(file);
 		
-		String text = fileManager.readTextFromFile(file);
-		if ( text != null ) {
-//			TextEditorPane textEditorTab = new TextEditorPane(file);
-//			textEditorTab.setText(text);
-////			textEditorTab.setCaretPosition(0);
-////			textEditorTab.setPanePath(file.getAbsolutePath());
-////			textEditorTab.setPaneName(file.getName());
-			
-			TxTextArea textArea = new TxTextArea(text);
-			
-			// Creates a JScrollPane that displays the contents of the specified component, 
-			// where both horizontal and vertical scrollbars appear whenever the component's contents are larger than the view.
-//			JScrollPane scrollPane = new JScrollPane(textEditorTab);
-			//JScrollPane scrollPane = new JScrollPane(textArea);
-			TxScrollPane scrollPane = new TxScrollPane(textArea, file.getName(), file);
-			
-			// Add the new tab in the "TabbedPane" component
-//			tabbedPane.add(textEditorTab.getTitle(), scrollPane);
-			tabbedPane.add(scrollPane.getTitle(), scrollPane);
-			
-//			documents.add(textEditorTab);
-			
-			tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
+		if ( tabIndex >= 0 ) {
+			// Already open in a Tab => select this Tab
+			tabbedPane.setSelectedIndex(tabIndex);
 		}
-		
+		else {
+			// Not yet open => load it in a new Tab
+			String text = fileManager.readTextFromFile(file);
+			if ( text != null ) {
+//				TextEditorPane textEditorTab = new TextEditorPane(file);
+//				textEditorTab.setText(text);
+////				textEditorTab.setCaretPosition(0);
+////				textEditorTab.setPanePath(file.getAbsolutePath());
+////				textEditorTab.setPaneName(file.getName());
+				
+				TxTextArea textArea = new TxTextArea(text);
+				
+				// Creates a JScrollPane that displays the contents of the specified component, 
+				// where both horizontal and vertical scrollbars appear whenever the component's contents are larger than the view.
+//				JScrollPane scrollPane = new JScrollPane(textEditorTab);
+				//JScrollPane scrollPane = new JScrollPane(textArea);
+				TxScrollPane scrollPane = new TxScrollPane(textArea, file.getName(), file);
+				
+				// Add the new tab in the "TabbedPane" component
+//				tabbedPane.add(textEditorTab.getTitle(), scrollPane);
+				tabbedPane.add(scrollPane.getTitle(), scrollPane);
+				
+//				documents.add(textEditorTab);
+				
+				tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
+			}
+		}
+
+//		Component c = tabbedPane.getSelectedComponent();
+//		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+//		bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
 		
 //		TextEditorPane textPane = null;
 //		String fileText = null;
