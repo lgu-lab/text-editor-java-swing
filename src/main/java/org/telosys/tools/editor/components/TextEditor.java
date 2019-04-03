@@ -19,12 +19,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentListener;
 
 /**
  * Text editor ( JFrame specialization )
  * 
- * @author laguerin
+ * @author Laurent GUERIN
  *
  */
 public class TextEditor extends JFrame {
@@ -38,8 +37,6 @@ public class TextEditor extends JFrame {
 	private final JFrame       frame ;
 	private final JTabbedPane  tabbedPane;
 	private final JLabel       bottomLabel;
-
-	private final DocumentListener documentListener ; 
 
 	private void log(String msg) {
 		System.out.println("LOG : " + msg);
@@ -66,7 +63,6 @@ public class TextEditor extends JFrame {
 		this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){            	
 //            	log("windowClosing");
-//            	actionClose();
             	actionExit();
             }
         });
@@ -108,7 +104,7 @@ public class TextEditor extends JFrame {
 		this.getContentPane().add(panel, BorderLayout.SOUTH);
 		
 		//--- The DocumentListener that will be used for each file
-		documentListener = new TextEditorListener(this);
+		//documentListener = new TextEditorListener(this);
 		
 		//--- Frame icon
 		this.setIconImage("icons/telosys_32.png");
@@ -181,55 +177,18 @@ public class TextEditor extends JFrame {
 				
 				// Creates a JScrollPane that displays the contents of the specified component, 
 				// where both horizontal and vertical scrollbars appear whenever the component's contents are larger than the view.
-//				JScrollPane scrollPane = new JScrollPane(textEditorTab);
-				//JScrollPane scrollPane = new JScrollPane(textArea);
 				TxScrollPane scrollPane = new TxScrollPane(textArea, file.getName(), file);
 				
 				// Add the new tab in the "TabbedPane" component
-//				tabbedPane.add(textEditorTab.getTitle(), scrollPane);
-				tabbedPane.add(scrollPane.getTitle(), scrollPane);
+				Component tab = tabbedPane.add(scrollPane.getTitle(), scrollPane);
+				log("New tab. Class = " + tab.getClass());
 				
-//				documents.add(textEditorTab);
+				int newTabIndex = tabbedPane.getTabCount() - 1;
+				textArea.setDocumentListener(new TxDocumentListener(tabbedPane, newTabIndex));
+				tabbedPane.setSelectedIndex(newTabIndex);
 				
-				tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 			}
 		}
-
-//		Component c = tabbedPane.getSelectedComponent();
-//		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-//		bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
-		
-//		TextEditorPane textPane = null;
-//		String fileText = null;
-//
-//		// if (file.getName().toUpperCase().endsWith(".FTF"))
-//		// {
-//		// textPane = readFTFFile(file);
-//		// textPane.setCaretPosition(0);
-//		// }
-//		// else
-//		// {
-//		textPane = new TextEditorPane();
-//		textPane.setAlreadySaved(true);
-//		fileText = readTxtFile(file);
-//		if (fileText != null) {
-//			textPane.setText(fileText);
-//			textPane.setCaretPosition(0);
-//			textPane.setPanePath(file.getAbsolutePath());
-//			// textPane.setMouseListener(new PopupListener());// Changed #LGU
-//			textPane.setMouseListener(new PopupMenuListener(popupMenu));
-//		}
-//		// }
-//
-//		if (textPane != null || fileText != null) {
-//			JScrollPane scrollPane = new JScrollPane(textPane);
-//			tabbedPane.add(file.getName(), scrollPane);
-//			documents.add(textPane);
-//		} else {
-//			JOptionPane.showMessageDialog(null, "Error in the loading of " + file.getName(), "Error",
-//					JOptionPane.ERROR_MESSAGE);
-//		}
-//		
 	}
 	
 	public void putOnFront() {
@@ -267,26 +226,6 @@ public class TextEditor extends JFrame {
 		}
 	}
 	
-//	private void setCurrentFile(File file) {
-//		this.file = file;
-//		resetTitle();
-//	}
-//	protected void resetTitle() {
-//		this.setTitle(file.getAbsolutePath());
-//	}
-//	
-//	protected void textChanged() {
-//		if ( ! textChanged ) {
-//			// First change
-//			this.setTitle("*"+this.getTitle());
-//		}
-//		textChanged = true ;
-//	}
-//	protected void resetTextChanged() {
-//		resetTitle();
-//		textChanged = false ;
-//	}
-	
 	protected void actionOpen() {
 		JFileChooser fileChooser = createFileChooser("Open file", "Open");
         int returnValue = fileChooser.showOpenDialog(this);		
@@ -304,9 +243,12 @@ public class TextEditor extends JFrame {
 	
 	protected void actionSave() {
 		tabbedPane.getSelectedIndex();
-		//saveFile(file);
-		// TODO
-		//fileManager.saveToFile(text, file);
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		// scrollPane.modified ?
+//		scrollPane.getFile();
+//		scrollPane.getText();
+		fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
+		scrollPane.reset();
 	}
 	
 //	protected File getCurrentDir() {
@@ -372,69 +314,23 @@ public class TextEditor extends JFrame {
 	}
 	protected void actionPaste() { 
 		//textArea.paste();
-//		documents.get(tabbedPane.getSelectedIndex()).paste(true);
-		// TODO
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		scrollPane.getTextArea().paste();
 	}
 	protected void actionCut() {
 //		textArea.cut();
-		// TODO
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		scrollPane.getTextArea().cut();
 	}
 	protected void actionCopy() {
 //		textArea.copy();
-		// TODO
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		scrollPane.getTextArea().copy();
 	}
 	protected void actionSelectAll() {
 //		textArea.selectAll();
-		// TODO
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		scrollPane.getTextArea().selectAll();
 	}
-	
-//	private void showError(String msg) {
-//		JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.ERROR_MESSAGE);
-//	}
-//	
-//	private void loadFile(File file) {
-//		if ( file == null ) {
-//			showError("File is null");
-//			return ;
-//		}
-//		if ( ! file.exists() ) {
-//			showError("File not found\n" + file.getAbsolutePath());
-//			return ;
-//		}
-//		if ( ! file.isFile() ) {
-//			showError("Not a file\n"  + file.getAbsolutePath());
-//			return ;
-//		}
-//		// File is OK : read it
-//		try {
-//			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
-//			//textArea.read(new FileReader(file), null);
-//			textArea.read(in, null);
-//			resetTextChanged();
-//			// set the document listener here (new file => new document)
-//			// textArea.getDocument().addDocumentListener( new TextEditorListener(this) ); // use a single instance
-//			textArea.getDocument().addDocumentListener( documentListener ); 
-//			
-//		} catch (IOException e) {
-//			//e.printStackTrace();
-//			showError("Cannot load file (IOException) \n" + file.getAbsolutePath());
-//		}
-//	}
-//	
-//	private void saveFile(File file) {
-//		if ( file == null ) {
-//			showError("File is null");
-//			return ;
-//		}
-//        try {
-//            //BufferedWriter outFile = new BufferedWriter(new FileWriter(file));
-//        	BufferedWriter outFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), charset));
-//            outFile.write(textArea.getText());
-//            outFile.close();
-//			resetTextChanged();
-//        } catch (IOException ex) {
-//			showError("Cannot save file (IOException) \n" + file.getAbsolutePath());
-//        }		
-//	}
 	
 }

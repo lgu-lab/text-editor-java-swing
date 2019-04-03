@@ -7,23 +7,24 @@ import javax.swing.JScrollPane;
 
 /**
  * 
- * JScrollPane specialization to keep the file the tab title
+ * JScrollPane specialization to keep the file, the tab title and return text.
  * 
- * @author laguerin
+ * @author Laurent GUERIN
  *
  */
 public class TxScrollPane extends JScrollPane implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final  File    file;
+	private final  String      title;
+	private final  File        file;
+	private final  TxTextArea  textArea;
 
-	private final  String  title;
-
-	public TxScrollPane(TxTextArea view, String title, File file) {
-		super(view);
-		this.file = file ;
+	public TxScrollPane(TxTextArea textArea, String title, File file) {
+		super(textArea);
+		this.textArea = textArea ;
 		this.title = title ;
+		this.file = file ;
 	}
 
 	public File getFile() {
@@ -34,4 +35,15 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 		return title;
 	}
 	
+	public TxTextArea getTextArea() {
+		return textArea ;
+	}
+
+	public String getText() {
+		return textArea.getText();
+	}
+	
+	public void reset() {
+		textArea.reset();
+	}
 }

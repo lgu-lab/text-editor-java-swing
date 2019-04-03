@@ -1,7 +1,9 @@
-package org.telosys.tools.editor.components;
+package org.telosys.tools.editor.old;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import org.telosys.tools.editor.components.TextEditor;
 
 public class TextEditorListener implements DocumentListener {
 
