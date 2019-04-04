@@ -32,54 +32,63 @@ public class TextEditorMenu {
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic(KeyEvent.VK_F);
+		JMenuItem item ;
 
-		JMenuItem openMenuItem = new JMenuItem("Open");
-		openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK)); // Ctrl-O
-		openMenuItem.addActionListener(new ActionListener() {
+		item = new JMenuItem("Open");
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK)); // Ctrl-O
+		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				editor.actionOpen();
 			}
 		});
-		menu.add(openMenuItem);
+		menu.add(item);
 
-		JMenuItem reloadMenuItem = new JMenuItem("Reload");
-		reloadMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); // Ctrl-L
-		reloadMenuItem.addActionListener(new ActionListener() {
+		item = new JMenuItem("Reload");
+		//item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); // Ctrl-L
+		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				// editor.actionLoad();
 				// TODO
 			}
 		});
-		menu.add(reloadMenuItem);
+		menu.add(item);
 
-		JMenuItem saveMenuItem = new JMenuItem("Save");
-		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); // Ctrl-S
-		saveMenuItem.addActionListener(new ActionListener() {
+		item = new JMenuItem("Save");
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); // Ctrl-S
+		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				editor.actionSave();
 			}
 		});
-		menu.add(saveMenuItem);
+		menu.add(item);
 
-		JMenuItem saveAsMenuItem = new JMenuItem("Save as");
-		saveAsMenuItem.addActionListener(new ActionListener() {
+		item = new JMenuItem("Save as");
+		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				editor.actionSaveAs();
 			}
 		});
-		menu.add(saveAsMenuItem);
+		menu.add(item);
 
-		menu.addSeparator();
+		menu.addSeparator(); //============
 
-		JMenuItem closeMenuItem = new JMenuItem("Close");
-		closeMenuItem.addActionListener(new ActionListener() {
+		item = new JMenuItem("Close");
+		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				editor.actionClose();
 			}
 		});
-		menu.add(closeMenuItem);
+		menu.add(item);
 
-		menu.addSeparator();
+		item = new JMenuItem("Close All");
+		item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				editor.actionCloseAll();
+			}
+		});
+		menu.add(item);
+
+		menu.addSeparator(); //============
 
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(new ActionListener() {

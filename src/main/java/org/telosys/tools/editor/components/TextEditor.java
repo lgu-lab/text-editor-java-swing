@@ -244,11 +244,13 @@ public class TextEditor extends JFrame {
 	protected void actionSave() {
 		tabbedPane.getSelectedIndex();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		// scrollPane.modified ?
-//		scrollPane.getFile();
-//		scrollPane.getText();
-		fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
-		scrollPane.reset();
+		if ( scrollPane != null ) {
+			// scrollPane.modified ?
+//			scrollPane.getFile();
+//			scrollPane.getText();
+			fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
+			scrollPane.reset();
+		}
 	}
 	
 //	protected File getCurrentDir() {
@@ -282,13 +284,29 @@ public class TextEditor extends JFrame {
 		return fileChooser;
 	}
 	
-	protected void actionClose() {
-		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		// scrollPane.modified ?
-		tabbedPane.remove(scrollPane);
+	protected void closeTab(TxScrollPane scrollPane) {
+		if ( scrollPane != null ) {
+			// scrollPane.modified ?
+			tabbedPane.remove(scrollPane);
+		}
 //		if ( JOptionPane.showConfirmDialog(null, "Close ?", "Title", JOptionPane.YES_NO_OPTION ) == 0 ) {
-//			frame.dispose();
+//		frame.dispose();
+	}
+	
+	protected void actionClose() {
+//		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+//		if ( scrollPane != null ) {
+//			// scrollPane.modified ?
+//			tabbedPane.remove(scrollPane);
 //		}
+		closeTab((TxScrollPane) tabbedPane.getSelectedComponent());
+	}
+
+	protected void actionCloseAll() {
+		int n = tabbedPane.getComponentCount() ;
+		for ( int i = n-1 ; i >= 0 ; i-- ) {
+			closeTab((TxScrollPane) tabbedPane.getComponentAt(i) );
+		} 
 	}
 	
 	/**
@@ -313,24 +331,28 @@ public class TextEditor extends JFrame {
 	    }
 	}
 	protected void actionPaste() { 
-		//textArea.paste();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		scrollPane.getTextArea().paste();
+		if ( scrollPane != null ) {
+			scrollPane.getTextArea().paste();
+		}
 	}
 	protected void actionCut() {
-//		textArea.cut();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		scrollPane.getTextArea().cut();
+		if ( scrollPane != null ) {
+			scrollPane.getTextArea().cut();
+		}
 	}
 	protected void actionCopy() {
-//		textArea.copy();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		scrollPane.getTextArea().copy();
+		if ( scrollPane != null ) {
+			scrollPane.getTextArea().copy();
+		}
 	}
 	protected void actionSelectAll() {
-//		textArea.selectAll();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		scrollPane.getTextArea().selectAll();
+		if ( scrollPane != null ) {
+			scrollPane.getTextArea().selectAll();
+		}
 	}
 	
 }
