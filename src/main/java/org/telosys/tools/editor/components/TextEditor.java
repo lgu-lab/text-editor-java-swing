@@ -215,7 +215,6 @@ public class TextEditor extends JFrame {
 	}
 	
 	private void setIconImage(String imagePath) {
-		//URL url = getClass().getResource(imagePath);
 		URL url = getClass().getClassLoader().getResource(imagePath);
 		if ( url != null ) {
 			ImageIcon imageIcon = new ImageIcon(url);
@@ -231,9 +230,6 @@ public class TextEditor extends JFrame {
         int returnValue = fileChooser.showOpenDialog(this);		
         if (returnValue == JFileChooser.APPROVE_OPTION) {
     		File selectedFile = fileChooser.getSelectedFile();
-//    		loadFile(selectedFile);
-//    		String text = fileManager.readTextFromFile(selectedFile);
-//            setCurrentFile(selectedFile);
     		editFile(selectedFile);
         }
 	}
@@ -246,19 +242,11 @@ public class TextEditor extends JFrame {
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
 		if ( scrollPane != null ) {
 			// scrollPane.modified ?
-//			scrollPane.getFile();
-//			scrollPane.getText();
 			fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
 			scrollPane.reset();
 		}
 	}
 	
-//	protected File getCurrentDir() {
-//		if ( file != null ) {
-//			return file.getParentFile();
-//		}
-//		return null ;
-//	}
 	protected void actionSaveAs() {
 		JFileChooser fileChooser = createFileChooser("Save as", "Save");
         int returnValue = fileChooser.showOpenDialog(this);		
@@ -279,7 +267,6 @@ public class TextEditor extends JFrame {
 		fileChooser.setDialogTitle(title);
 		fileChooser.setApproveButtonText(buttonText);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY );
-//		fileChooser.setCurrentDirectory(getCurrentDir());
 		fileChooser.setCurrentDirectory(currentDir);
 		return fileChooser;
 	}
@@ -294,11 +281,6 @@ public class TextEditor extends JFrame {
 	}
 	
 	protected void actionClose() {
-//		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-//		if ( scrollPane != null ) {
-//			// scrollPane.modified ?
-//			tabbedPane.remove(scrollPane);
-//		}
 		closeTab((TxScrollPane) tabbedPane.getSelectedComponent());
 	}
 
