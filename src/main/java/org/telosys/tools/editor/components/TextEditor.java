@@ -240,11 +240,12 @@ public class TextEditor extends JFrame {
 	protected void actionSave() {
 		tabbedPane.getSelectedIndex();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		if ( scrollPane != null ) {
-			// scrollPane.modified ?
-			fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
-			scrollPane.reset();
-		}
+//		if ( scrollPane != null ) {
+//			// scrollPane.modified ?
+//			fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
+//			scrollPane.reset();
+//		}
+		save(scrollPane);
 	}
 	
 	protected void actionSaveAs() {
@@ -271,13 +272,47 @@ public class TextEditor extends JFrame {
 		return fileChooser;
 	}
 	
+	/**
+	 * Saves the file associated with the given ScrollPane
+	 * @param scrollPane
+	 */
+	protected void save(TxScrollPane scrollPane) {
+		if ( scrollPane != null ) {
+			fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
+			scrollPane.reset();
+		}		
+	}
+	
 	protected void closeTab(TxScrollPane scrollPane) {
 		if ( scrollPane != null ) {
-			// scrollPane.modified ?
-			tabbedPane.remove(scrollPane);
+			if ( scrollPane.isModified() ) { 
+				// The text has been modified (and not yet saved) => Confirmation 
+				String msg = "'" + scrollPane.getFile().getName() + "' has been modified.  Save changes ?" ;
+				Object[] options = { "Save", "Don't Save", "Cancel" };
+				int choice = JOptionPane.showOptionDialog(null, 
+						msg, 
+						"Close file ",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null, //do not use a custom Icon
+						options, //the titles of buttons
+						options[0] ); //default button title
+			    if ( choice == 0 ) {
+			    	// Save and close
+			    	save(scrollPane) ;
+					tabbedPane.remove(scrollPane);
+			    }
+			    else if ( choice == 1 ) {
+			    	// Don't Save and close
+					tabbedPane.remove(scrollPane);
+			    }
+			    // Else nothing to do 
+			}
+			else {
+				// Text not modified => Close directly
+				tabbedPane.remove(scrollPane);
+			}
 		}
-//		if ( JOptionPane.showConfirmDialog(null, "Close ?", "Title", JOptionPane.YES_NO_OPTION ) == 0 ) {
-//		frame.dispose();
 	}
 	
 	protected void actionClose() {
@@ -299,7 +334,7 @@ public class TextEditor extends JFrame {
 //			
 //		}
 		
-		Object[] options = { "Exit", "Cancel" };
+		Object[] options = { "Exit", "Cancel" }; // 2 buttons
 		int choice = JOptionPane.showOptionDialog(null, 
 				"Are you sure you want to exit ?", 
 				"Confirm Exit",

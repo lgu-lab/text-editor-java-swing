@@ -1,9 +1,6 @@
 package org.telosys.tools.editor.components;
 
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseListener;
 import java.io.Serializable;
 
 import javax.swing.JTextArea;
@@ -43,10 +40,17 @@ public class TxTextArea extends JTextArea implements Serializable {
 		this.getDocument().addDocumentListener(listener);
 	}
 	
-	void reset() {
+	protected void reset() {
 		if ( documentListener != null ) {
 			documentListener.reset();
 		}
+	}
+
+	protected boolean isModified() {
+		if ( documentListener != null ) {
+			return documentListener.isModified();
+		}
+		return false ;
 	}
 
 //	private void setKeyListener() {

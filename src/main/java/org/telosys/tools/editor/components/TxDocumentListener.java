@@ -31,6 +31,10 @@ class TxDocumentListener implements DocumentListener {
 		modified = true ;
     }
     
+    public boolean isModified() {
+		return modified ;
+	}
+
     public void reset() {
     	this.tabbedPane.setTitleAt(tabIndex, originalTitle);
     	this.modified = false ;
@@ -51,13 +55,4 @@ class TxDocumentListener implements DocumentListener {
     	// Nothing to do
     }
 
-//    public void updateLog(DocumentEvent e, String action) {
-//        Document doc = (Document)e.getDocument();
-//        int changeLength = e.getLength();
-//        displayArea.append(
-//            changeLength + " character" +
-//            ((changeLength == 1) ? " " : "s ") +
-//            action + doc.getProperty("name") + "." + newline +
-//            "  Text length = " + doc.getLength() + newline);
-//    }
 }

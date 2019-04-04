@@ -43,6 +43,10 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 		return textArea.getText();
 	}
 	
+	public boolean isModified() {
+		return textArea.isModified();
+	}
+	
 	public void reset() {
 		textArea.reset();
 	}
