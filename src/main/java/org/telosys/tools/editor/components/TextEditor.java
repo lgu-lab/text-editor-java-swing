@@ -35,8 +35,8 @@ public class TextEditor extends JFrame {
 	private final File         currentDir ;
 
 	private final JFrame       frame ;
-	private final JTabbedPane  tabbedPane;
-	private final JLabel       bottomLabel;
+	private final JTabbedPane  tabbedPane ;
+	private final JLabel       bottomLabel ; 
 
 	private void log(String msg) {
 		System.out.println("LOG : " + msg);
@@ -172,7 +172,7 @@ public class TextEditor extends JFrame {
 				
 				// Creates a JScrollPane that displays the contents of the specified component, 
 				// where both horizontal and vertical scrollbars appear whenever the component's contents are larger than the view.
-				TxScrollPane scrollPane = new TxScrollPane(textArea, file.getName(), file);
+				TxScrollPane scrollPane = new TxScrollPane(textArea, file);
 				
 				// Add the new tab in the "TabbedPane" component
 				Component tab = tabbedPane.add(scrollPane.getTitle(), scrollPane);
@@ -230,22 +230,24 @@ public class TextEditor extends JFrame {
 	}
 	
 	protected void actionSave() {
-		tabbedPane.getSelectedIndex();
+		//tabbedPane.getSelectedIndex();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
 		save(scrollPane);
 	}
 	
 	protected void actionSaveAs() {
+		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
+		int tabIndex = tabbedPane.getSelectedIndex();
 		JFileChooser fileChooser = createFileChooser("Save as", "Save");
         int returnValue = fileChooser.showOpenDialog(this);		
         if (returnValue == JFileChooser.APPROVE_OPTION) {
     		File selectedFile = fileChooser.getSelectedFile();
-//            saveFile(selectedFile);
-// TODO :
-// Get current text 
-//    		String text = xxxx ;
-//    		fileManager.saveToFile(text, selectedFile);
-//            setCurrentFile(selectedFile);
+    		if ( selectedFile != null ) {
+    			fileManager.saveTextToFile(scrollPane.getText(), selectedFile );
+    			scrollPane.reset(selectedFile);
+    			tabbedPane.setTitleAt(tabIndex, scrollPane.getTitle());
+    			bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
+    		}
         }
 	}
 	

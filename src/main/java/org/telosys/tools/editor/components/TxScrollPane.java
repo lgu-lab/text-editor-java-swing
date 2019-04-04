@@ -16,15 +16,16 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final  String      title;
-	private final  File        file;
 	private final  TxTextArea  textArea;
+	private  String      title;
+	private  File        file;
 
-	public TxScrollPane(TxTextArea textArea, String title, File file) {
+//	public TxScrollPane(TxTextArea textArea, String title, File file) {
+	public TxScrollPane(TxTextArea textArea, File file) {
 		super(textArea);
 		this.textArea = textArea ;
-		this.title = title ;
 		this.file = file ;
+		this.title = file.getName() ;
 	}
 
 	public File getFile() {
@@ -47,7 +48,20 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 		return textArea.isModified();
 	}
 	
+	/**
+	 * Reset status 
+	 */
 	public void reset() {
-		textArea.reset();
+		textArea.reset(this.title);
+	}
+
+	/**
+	 * Reset status and change the current file (eg for "Save As")
+	 * @param file
+	 */
+	public void reset(File file) {
+		this.file = file ;
+		this.title = file.getName() ;		
+		this.textArea.reset(this.title);
 	}
 }

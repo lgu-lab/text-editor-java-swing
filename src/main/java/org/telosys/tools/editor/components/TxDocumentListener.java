@@ -6,17 +6,19 @@ import javax.swing.event.DocumentListener;
 
 class TxDocumentListener implements DocumentListener {
  
-	private final JTabbedPane tabbedPane ;
-	private final int         tabIndex ;
+	private final JTabbedPane  tabbedPane ;
+	private final int          tabIndex ;
+//	private final TxScrollPane scrollPane;
 	
 	private boolean modified = false ;
-	private String  originalTitle = ""; 
+//	private String  originalTitle = ""; 
 	
     public TxDocumentListener(JTabbedPane tabbedPane, int tabIndex) {
 		super();
 		this.tabbedPane    = tabbedPane;
 		this.tabIndex      = tabIndex;
-		this.originalTitle = tabbedPane.getTitleAt(tabIndex);
+//		this.originalTitle = tabbedPane.getTitleAt(tabIndex);
+//		this.scrollPane = scrollPane ;
 		this.modified = false ;
 	}
 
@@ -35,8 +37,8 @@ class TxDocumentListener implements DocumentListener {
 		return modified ;
 	}
 
-    public void reset() {
-    	this.tabbedPane.setTitleAt(tabIndex, originalTitle);
+    public void reset(String title) {
+    	this.tabbedPane.setTitleAt(tabIndex, title);
     	this.modified = false ;
     }
 

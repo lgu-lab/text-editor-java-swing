@@ -40,9 +40,9 @@ public class TxTextArea extends JTextArea implements Serializable {
 		this.getDocument().addDocumentListener(listener);
 	}
 	
-	protected void reset() {
+	protected void reset(String title) {
 		if ( documentListener != null ) {
-			documentListener.reset();
+			documentListener.reset(title);
 		}
 	}
 
