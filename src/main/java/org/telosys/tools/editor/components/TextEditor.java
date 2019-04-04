@@ -167,11 +167,6 @@ public class TextEditor extends JFrame {
 			// Not yet open => load it in a new Tab
 			String text = fileManager.readTextFromFile(file);
 			if ( text != null ) {
-//				TextEditorPane textEditorTab = new TextEditorPane(file);
-//				textEditorTab.setText(text);
-////				textEditorTab.setCaretPosition(0);
-////				textEditorTab.setPanePath(file.getAbsolutePath());
-////				textEditorTab.setPaneName(file.getName());
 				
 				TxTextArea textArea = new TxTextArea(text);
 				
@@ -233,18 +228,10 @@ public class TextEditor extends JFrame {
     		editFile(selectedFile);
         }
 	}
-//	protected void actionLoad() {
-//		loadFile(file); 
-//	}
 	
 	protected void actionSave() {
 		tabbedPane.getSelectedIndex();
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-//		if ( scrollPane != null ) {
-//			// scrollPane.modified ?
-//			fileManager.saveTextToFile(scrollPane.getText(), scrollPane.getFile() );
-//			scrollPane.reset();
-//		}
 		save(scrollPane);
 	}
 	
@@ -283,35 +270,58 @@ public class TextEditor extends JFrame {
 		}		
 	}
 	
-	protected void closeTab(TxScrollPane scrollPane) {
-		if ( scrollPane != null ) {
-			if ( scrollPane.isModified() ) { 
-				// The text has been modified (and not yet saved) => Confirmation 
-				String msg = "'" + scrollPane.getFile().getName() + "' has been modified.  Save changes ?" ;
-				Object[] options = { "Save", "Don't Save", "Cancel" };
-				int choice = JOptionPane.showOptionDialog(null, 
-						msg, 
-						"Close file ",
-						JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE,
-						null, //do not use a custom Icon
-						options, //the titles of buttons
-						options[0] ); //default button title
-			    if ( choice == 0 ) {
-			    	// Save and close
-			    	save(scrollPane) ;
-					tabbedPane.remove(scrollPane);
-			    }
-			    else if ( choice == 1 ) {
-			    	// Don't Save and close
-					tabbedPane.remove(scrollPane);
-			    }
-			    // Else nothing to do 
+	/**
+	 * Close all tabs (with confirmation if some texts have been modified)
+	 */
+	protected boolean closeAllTabs() {
+		int n = tabbedPane.getComponentCount() ;
+		for ( int i = n-1 ; i >= 0 ; i-- ) {
+			boolean r = closeTab((TxScrollPane) tabbedPane.getComponentAt(i) );
+			if ( ! r ) {
+				// Cancel
+				return false ;
 			}
-			else {
-				// Text not modified => Close directly
+		} 
+		return true ; // All closed
+	}
+	
+	/**
+	 * Close the given ScrollPane (with confirmation if the text has been modified)
+	 * @param scrollPane
+	 */
+	protected boolean closeTab(TxScrollPane scrollPane) {
+		if ( scrollPane != null && scrollPane.isModified() ) { 
+			// The text has been modified (and not yet saved) => Confirmation 
+			String msg = "'" + scrollPane.getFile().getName() + "' has been modified.  Save changes ?" ;
+			Object[] options = { "Save", "Don't Save", "Cancel" };
+			int choice = JOptionPane.showOptionDialog(null, 
+					msg, 
+					"Close file ",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null, //do not use a custom Icon
+					options, //the titles of buttons
+					options[0] ); //default button title
+		    if ( choice == 0 ) {
+		    	// Save and close
+		    	save(scrollPane) ;
 				tabbedPane.remove(scrollPane);
-			}
+				return true ;
+		    }
+		    else if ( choice == 1 ) {
+		    	// Don't Save and close
+				tabbedPane.remove(scrollPane);
+				return true ;
+		    }
+		    else {
+			    // Cancel
+		    	return false ;
+		    }
+		}
+		else {
+			// Text not modified => Close directly
+			tabbedPane.remove(scrollPane);
+			return true ;
 		}
 	}
 	
@@ -320,10 +330,7 @@ public class TextEditor extends JFrame {
 	}
 
 	protected void actionCloseAll() {
-		int n = tabbedPane.getComponentCount() ;
-		for ( int i = n-1 ; i >= 0 ; i-- ) {
-			closeTab((TxScrollPane) tabbedPane.getComponentAt(i) );
-		} 
+		closeAllTabs();
 	}
 	
 	/**
@@ -334,37 +341,45 @@ public class TextEditor extends JFrame {
 //			
 //		}
 		
-		Object[] options = { "Exit", "Cancel" }; // 2 buttons
-		int choice = JOptionPane.showOptionDialog(null, 
-				"Are you sure you want to exit ?", 
-				"Confirm Exit",
-				JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				null, //do not use a custom Icon
-				options, //the titles of buttons
-				options[1] ); //default button title
-	    if ( choice == 0 ) {
+//		Object[] options = { "Exit", "Cancel" }; // 2 buttons
+//		int choice = JOptionPane.showOptionDialog(null, 
+//				"Are you sure you want to exit ?", 
+//				"Confirm Exit",
+//				JOptionPane.YES_NO_CANCEL_OPTION,
+//				JOptionPane.QUESTION_MESSAGE,
+//				null, //do not use a custom Icon
+//				options, //the titles of buttons
+//				options[1] ); //default button title
+//	    if ( choice == 0 ) {
+//			frame.dispose();
+//	    }
+	    if ( closeAllTabs() ) {
+	    	// Ok, everything closed
 			frame.dispose();
 	    }
 	}
+	
 	protected void actionPaste() { 
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
 		if ( scrollPane != null ) {
 			scrollPane.getTextArea().paste();
 		}
 	}
+	
 	protected void actionCut() {
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
 		if ( scrollPane != null ) {
 			scrollPane.getTextArea().cut();
 		}
 	}
+	
 	protected void actionCopy() {
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
 		if ( scrollPane != null ) {
 			scrollPane.getTextArea().copy();
 		}
 	}
+	
 	protected void actionSelectAll() {
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
 		if ( scrollPane != null ) {
