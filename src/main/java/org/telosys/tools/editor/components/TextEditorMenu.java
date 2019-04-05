@@ -49,15 +49,15 @@ public class TextEditorMenu {
 		});
 		menu.add(item);
 
-		item = new JMenuItem("Reload");
-		//item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); // Ctrl-L
-		item.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// editor.actionLoad();
-				// TODO
-			}
-		});
-		menu.add(item);
+//		item = new JMenuItem("Reload");
+//		//item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK)); // Ctrl-L
+//		item.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent ev) {
+//				// editor.actionLoad();
+//				// TODO
+//			}
+//		});
+//		menu.add(item);
 
 		item = new JMenuItem("Save");
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); // Ctrl-S
