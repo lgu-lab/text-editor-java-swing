@@ -15,8 +15,6 @@ public class TxTextArea extends JTextArea implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private TxDocumentListener documentListener = null ;
-	
 	public TxTextArea(String text) {
 		super();
 		
@@ -31,26 +29,10 @@ public class TxTextArea extends JTextArea implements Serializable {
 		this.setTabSize(3);
 		this.setCaretPosition(0);
 		
-//		this.getDocument().addDocumentListener( new TxDocumentListener() );
-//		setKeyListener();
 	}
 	
 	protected void setDocumentListener( TxDocumentListener listener) {
-		documentListener = listener;
 		this.getDocument().addDocumentListener(listener);
 	}
 	
-	protected void reset(String title) {
-		if ( documentListener != null ) {
-			documentListener.reset(title);
-		}
-	}
-
-	protected boolean isModified() {
-		if ( documentListener != null ) {
-			return documentListener.isModified();
-		}
-		return false ;
-	}
-
 }

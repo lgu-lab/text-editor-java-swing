@@ -1,0 +1,26 @@
+
+
+. Save As :
+  Check file existence :
+   'xxx' already exists.
+   Do you want to replace it ?
+
+. Close icon on tab
+
+. Telosys / New Model
+. Telosys / New Entity (choose model + entity name )
+. Telosys / Templates (choose & download)
+. Telosys / Code generation
+
+. Telosys / Configuration
+
+. List of recent files 
+
+
+DONE :
+. Edit : NullPointerException if no tab 
+. Close All
+. check if updated before close   
+. Save As
+. About : no html
+. File chooser with system Look & Feel

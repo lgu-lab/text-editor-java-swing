@@ -1,0 +1,16 @@
+
+
+  TextEditor extends JFrame 
+  
+  +------+------+
+  | Tab1 | Tab2 | JTabbedPane tabbedPane
+  +----------------------------------------------------------+
+  | TxScrollPane extends JScrollPane  ( 1 for each tab )     |
+  |                                                          |
+  |   TxTextArea extends JTextArea                           |
+  |       TxDocumentListener implements DocumentListener     |
+  |                                                          |
+  +----------------------------------------------------------+
+  | JLabel bottomLabel                                       |
+  +----------------------------------------------------------+
+  

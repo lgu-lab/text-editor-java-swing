@@ -143,10 +143,10 @@ public class TextEditor extends JFrame {
 	 * @param file
 	 * @return
 	 */
-	public int getFileTabIndex(File file) {
+	private int getFileTabIndex(File file) {
 		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
 			Component c = tabbedPane.getComponentAt(i);
-			bottomLabel.setText(i + " : Component class " + c.getClass().getSimpleName());
+			//bottomLabel.setText(i + " : Component class " + c.getClass().getSimpleName());
 			if (c instanceof TxScrollPane) {
 				TxScrollPane scrollPane = (TxScrollPane) c;
 				if (file.getAbsolutePath().equals(scrollPane.getFile().getAbsolutePath())) {
@@ -182,7 +182,7 @@ public class TextEditor extends JFrame {
 				// Creates a JScrollPane that displays the contents of the specified component,
 				// where both horizontal and vertical scrollbars appear whenever the component's
 				// contents are larger than the view.
-				TxScrollPane scrollPane = new TxScrollPane(textArea, file);
+				TxScrollPane scrollPane = new TxScrollPane(textArea, file, tabbedPane);
 
 				// Add the new tab in the "TabbedPane" component
 				tabbedPane.add(scrollPane.getTitle(), scrollPane);
@@ -190,9 +190,9 @@ public class TextEditor extends JFrame {
 				// log("New tab. Class = " + tab.getClass());
 
 				int newTabIndex = tabbedPane.getTabCount() - 1;
-				textArea.setDocumentListener(new TxDocumentListener(tabbedPane, newTabIndex));
+				TxDocumentListener documentListener = new TxDocumentListener(scrollPane);
+				textArea.setDocumentListener(documentListener);
 				tabbedPane.setSelectedIndex(newTabIndex);
-
 			}
 		}
 	}
@@ -248,23 +248,31 @@ public class TextEditor extends JFrame {
 
 	protected void actionSaveAs() {
 		TxScrollPane scrollPane = (TxScrollPane) tabbedPane.getSelectedComponent();
-		int tabIndex = tabbedPane.getSelectedIndex();
 		JFileChooser fileChooser = createFileChooser("Save as", "Save");
 		int returnValue = fileChooser.showOpenDialog(this);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 			if (selectedFile != null) {
-				fileManager.saveTextToFile(scrollPane.getText(), selectedFile);
-				scrollPane.reset(selectedFile);
-				tabbedPane.setTitleAt(tabIndex, scrollPane.getTitle());
-				bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
+				int foundIndex = getFileTabIndex(selectedFile);
+				if ( foundIndex >= 0 ) {
+					String msg = "Cannot save as '" + selectedFile.getName() + "'"
+							+ "\nThis file is already opened" ;
+					JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.WARNING_MESSAGE);
+					tabbedPane.setSelectedIndex(foundIndex);
+				}
+				else {
+					fileManager.saveTextToFile(scrollPane.getText(), selectedFile);
+					scrollPane.reset(selectedFile);
+					bottomLabel.setText(scrollPane.getFile().getAbsolutePath());
+				}
 			}
 		}
 	}
 
 	private JFileChooser createFileChooser(String title, String buttonText) {
 		JFileChooser.setDefaultLocale(Locale.US);
-		JFileChooser fileChooser = new JFileChooser();
+		
+		JFileChooser fileChooser = new TxFileChooser();
 		fileChooser.setDialogTitle(title);
 		fileChooser.setApproveButtonText(buttonText);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
