@@ -6,8 +6,10 @@ import java.io.Serializable;
 import javax.swing.JScrollPane;
 
 /**
+ * JScrollPane specialization to keep the file, the tab title and return text.<br>
  * 
- * JScrollPane specialization to keep the file, the tab title and return text.
+ * The 'ScrollPane' is the component containing the 'TextArea' <br>
+ * ( it's a TextArea with scroll bars )
  * 
  * @author Laurent GUERIN
  *
@@ -20,7 +22,11 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 	private  String      title;
 	private  File        file;
 
-//	public TxScrollPane(TxTextArea textArea, String title, File file) {
+	/**
+	 * Constructor
+	 * @param textArea
+	 * @param file
+	 */
 	public TxScrollPane(TxTextArea textArea, File file) {
 		super(textArea);
 		this.textArea = textArea ;

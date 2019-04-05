@@ -9,6 +9,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+/**
+ * Text editor menu builder (provides the 'JMenuBar')
+ * 
+ * @author Laurent GUERIN
+ *
+ */
 public class TextEditorMenu {
 
 	private final TextEditor editor;
