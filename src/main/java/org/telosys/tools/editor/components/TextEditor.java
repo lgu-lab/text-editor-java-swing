@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -50,6 +51,15 @@ public class TextEditor extends JFrame {
 	
 	public TextEditor(File home) {
 		super();
+
+		// Set Operating System Look & Feel
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// Nothing to do 
+		}
+
 		frame = this;
 
 		HOME = home.getAbsolutePath();
@@ -185,7 +195,11 @@ public class TextEditor extends JFrame {
 				TxScrollPane scrollPane = new TxScrollPane(textArea, file, tabbedPane);
 
 				// Add the new tab in the "TabbedPane" component
-				tabbedPane.add(scrollPane.getTitle(), scrollPane);
+//				tabbedPane.add(scrollPane.getTitle(), scrollPane);
+				
+				tabbedPane.addTab(scrollPane.getTitle(), scrollPane);
+//				tabbedPane.addTab(title, icon, component);
+//				tabbedPane.addTab(title, icon, component, tip);
 				// Component tab = tabbedPane.add(scrollPane.getTitle(), scrollPane);
 				// log("New tab. Class = " + tab.getClass());
 
@@ -209,13 +223,12 @@ public class TextEditor extends JFrame {
 	}
 
 	private void initFonts() {
-		// Font for Menu and Menu items
-		Font menuFont = new Font("sans-serif", Font.BOLD, 14);
-		UIManager.put("Menu.font", menuFont);
-		UIManager.put("MenuItem.font", menuFont);
+//		// Font for Menu and Menu items
+//		Font menuFont = new Font("sans-serif", Font.BOLD, 14);
+//		UIManager.put("Menu.font", menuFont);
+//		UIManager.put("MenuItem.font", menuFont);
 
 		// Font for TextArea
-		// Font textAreaFont = new Font("Courier New", Font.PLAIN, 16); // OK
 		Font textAreaFont = new Font(Font.MONOSPACED, Font.PLAIN, 16); // OK
 		UIManager.put("TextArea.font", textAreaFont);
 	}
