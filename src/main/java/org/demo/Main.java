@@ -1,9 +1,11 @@
-package org.telosys.tools.editor;
+package org.demo;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import org.telosys.tools.editor.TextEditorsManager;
 
 public class Main {
 
@@ -18,7 +20,7 @@ public class Main {
 //		System.out.println("All editors are running... ");
 //		
 		
-		TextEditorsManager editorsManager = new TextEditorsManager();
+		TextEditorsManager editorsManager = new TextEditorsManager("D:/TMP");
 		
 		BufferedReader br = null;
 

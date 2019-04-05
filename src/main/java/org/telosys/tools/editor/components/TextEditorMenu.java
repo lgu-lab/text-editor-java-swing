@@ -186,7 +186,8 @@ public class TextEditorMenu {
 		// ActionEvent.CTRL_MASK));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				new AboutDialog();
+//				new AboutDialog();
+				AboutDialog.show();
 			}
 		});
 

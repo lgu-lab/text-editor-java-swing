@@ -29,6 +29,8 @@ import javax.swing.event.ChangeListener;
 public class TextEditor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static String HOME = "" ;
 
 	private final FileManager fileManager = new FileManager();
 
@@ -42,11 +44,16 @@ public class TextEditor extends JFrame {
 	// System.out.println("LOG : " + msg);
 	// }
 
-	public TextEditor(File absoluteDirPath) {
+	public static String getHome() {
+		return HOME ;
+	}
+	
+	public TextEditor(File home) {
 		super();
 		frame = this;
 
-		currentDir = absoluteDirPath;
+		HOME = home.getAbsolutePath();
+		currentDir = home;
 
 		setSize(600, 600);
 		setLocationRelativeTo(null);
