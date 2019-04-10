@@ -161,17 +161,12 @@ public class TextEditorMenu {
 		JMenu menu = new JMenu("Tools");
 		menu.setMnemonic(KeyEvent.VK_T);
 
-		JMenuItem menuItem = new JMenuItem("Tool1");
-		// cutI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-		// ActionEvent.CTRL_MASK));
-		// cutI.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent ev) {
-		// //pad = textArea.getSelectedText();
-		// //textArea.replaceRange("", textArea.getSelectionStart(),
-		// textArea.getSelectionEnd());
-		// editor.actionCut();
-		// }
-		// });
+		JMenuItem menuItem = new JMenuItem("Debug");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				DebugDialog.show();
+			}
+		});
 		menu.add(menuItem);
 
 		return menu;

@@ -21,6 +21,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.telosys.tools.editor.components.tabs.ButtonTabComponent;
+
 /**
  * Text editor main frame ( JFrame specialization )
  * 
@@ -126,6 +128,9 @@ public class TextEditor extends JFrame {
 		this.setTitle("Telosys Editor");
 
 		this.setVisible(true);
+
+		// End of constructor : expose debug variables
+		DebugVariables.tabbedPane = this.tabbedPane;
 	}
 
 	@Override
@@ -204,6 +209,17 @@ public class TextEditor extends JFrame {
 				// log("New tab. Class = " + tab.getClass());
 
 				int newTabIndex = tabbedPane.getTabCount() - 1;
+				
+				// #LGU
+				/*
+				 * Sets the component that is responsible for rendering the title for the specified tab.
+				 * A null value means JTabbedPane will render the title and/or icon for the specified tab.
+				 * A non-null value means the component will render the title and JTabbedPane will not render the title and/or icon.
+				 * Note: The component must not be one that the developer has already added to the tabbed pane.
+				 */
+//				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(tabbedPane)); // Specific TAB
+				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(this, scrollPane)); // Specific TAB
+				
 				TxDocumentListener documentListener = new TxDocumentListener(scrollPane);
 				textArea.setDocumentListener(documentListener);
 				tabbedPane.setSelectedIndex(newTabIndex);
@@ -309,9 +325,16 @@ public class TextEditor extends JFrame {
 	 * Close all tabs (with confirmation if some texts have been modified)
 	 */
 	protected boolean closeAllTabs() {
-		int n = tabbedPane.getComponentCount();
+		//int n = tabbedPane.getComponentCount();
+		int n = tabbedPane.getTabCount();
 		for (int i = n - 1; i >= 0; i--) {
-			boolean r = closeTab((TxScrollPane) tabbedPane.getComponentAt(i));
+			Component component = tabbedPane.getComponentAt(i);
+			TxScrollPane scrollPane = (TxScrollPane) component;
+			//tabbedPane.getTabComponentAt(index)
+
+//			boolean r = closeTab((TxScrollPane) tabbedPane.getComponentAt(i));
+			boolean r = closeTab(scrollPane);
+			
 			if (!r) {
 				// Cancel
 				return false;
@@ -325,7 +348,7 @@ public class TextEditor extends JFrame {
 	 * 
 	 * @param scrollPane
 	 */
-	protected boolean closeTab(TxScrollPane scrollPane) {
+	public boolean closeTab(TxScrollPane scrollPane) {
 		if (scrollPane != null && scrollPane.isModified()) {
 			// The text has been modified (and not yet saved) => Confirmation
 			String msg = "'" + scrollPane.getFile().getName() + "' has been modified.  Save changes ?";

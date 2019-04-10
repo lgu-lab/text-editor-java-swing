@@ -22,8 +22,8 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 
 	private final JTabbedPane tabbedPane; // set of tabs
 	private final TxTextArea textArea;
+	private File file; // Can change in case of 'save as'
 	private String title;
-	private File file;
 	private boolean modified = false;
 
 	/**
@@ -37,7 +37,7 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 		this.tabbedPane = tabbedPane;
 		this.textArea = textArea;
 		this.file = file;
-		this.title = file.getName();
+		this.title = "   " + file.getName();
 		this.modified = false;
 	}
 
@@ -84,16 +84,21 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 	 * Reset status as 'not modified'
 	 */
 	public void reset() {
-		tabbedPane.setTitleAt(getTabIndex(), title); // Reset title without '*'
 		modified = false;
+		title = "   " + file.getName(); // Reset title without '*'
+		tabbedPane.setTitleAt(getTabIndex(), title);   
+//		tabbedPane.repaint();
 	}
 
 	/**
 	 * Marks the current Tab as 'modified'
 	 */
 	private void markAsUpdated() {
-		tabbedPane.setTitleAt(getTabIndex(), " * " + title); // add "*" at the beginning of the title
 		modified = true; // Flag as modified
+		title = "* " + file.getName();
+//		tabbedPane.setTitleAt(getTabIndex(), " * " + title); // add "*" at the beginning of the title
+		tabbedPane.setTitleAt(getTabIndex(), title);
+//		tabbedPane.repaint();
 	}
 
 	public boolean isModified() {

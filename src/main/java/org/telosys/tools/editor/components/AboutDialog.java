@@ -25,17 +25,19 @@ public class AboutDialog {
 
 //		URL imageURL = AboutDialog.class.getClassLoader().getResource("icons/telosys_64.png");
 		
+		String title = "About Telosys editor";
+		
 		String msg = "Telosys editor version " + TextEditorVersion.VERSION 
 				+ "\n"
 				+ "home is '" + TextEditor.getHome() + "' "
 				+ "\n" ;
 		
 		if (ICON_URL != null)   {
-			ImageIcon ICON = new ImageIcon(ICON_URL);
-			JOptionPane.showMessageDialog(null, msg, "About Telosys editor", JOptionPane.INFORMATION_MESSAGE, ICON);
+			ImageIcon icon = new ImageIcon(ICON_URL);
+			JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE, icon);
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "My Information Message", "About Telosys editor", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
 		}
 		  
 	}
