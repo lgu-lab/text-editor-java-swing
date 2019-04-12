@@ -19,6 +19,8 @@ import javax.swing.JTabbedPane;
 public class TxScrollPane extends JScrollPane implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String FILLER = "  " ;
+	private static final String STAR   = "*" ;
 
 	private final JTabbedPane tabbedPane; // set of tabs
 	private final TxTextArea textArea;
@@ -37,7 +39,7 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 		this.tabbedPane = tabbedPane;
 		this.textArea = textArea;
 		this.file = file;
-		this.title = "   " + file.getName();
+		this.title = FILLER + file.getName();
 		this.modified = false;
 	}
 
@@ -85,7 +87,7 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 	 */
 	public void reset() {
 		modified = false;
-		title = "   " + file.getName(); // Reset title without '*'
+		title = FILLER + file.getName(); // Reset title without '*'
 		tabbedPane.setTitleAt(getTabIndex(), title);   
 //		tabbedPane.repaint();
 	}
@@ -95,8 +97,7 @@ public class TxScrollPane extends JScrollPane implements Serializable {
 	 */
 	private void markAsUpdated() {
 		modified = true; // Flag as modified
-		title = "* " + file.getName();
-//		tabbedPane.setTitleAt(getTabIndex(), " * " + title); // add "*" at the beginning of the title
+		title = STAR + file.getName(); // add "*" at the beginning of the title
 		tabbedPane.setTitleAt(getTabIndex(), title);
 //		tabbedPane.repaint();
 	}

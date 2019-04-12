@@ -44,6 +44,12 @@ public class Main {
                 if ("bbb".equals(input)) {
             		editorsManager.openTextEditor(new File("D:/TMP/bbb.txt") );
                 }
+                if ("db".equals(input)) {
+            		editorsManager.openTextEditor(new File("D:/TMP/databases.dbcfg") );
+                }
+                if ("ccc".equals(input)) {
+            		editorsManager.openTextEditor(new File("D:/TMP/Ccc.entity") );
+                }
 
                 if ("q".equals(input)) {
                     System.out.println("Exit!");

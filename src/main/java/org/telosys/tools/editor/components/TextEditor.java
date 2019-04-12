@@ -9,6 +9,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Locale;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -36,6 +37,22 @@ public class TextEditor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
+//	private static final ImageIcon DBCFG_ICON  = new ImageIcon(TextEditor.class.getResource("/icons/dbcfg16.png"));
+//	private static final ImageIcon MODEL_ICON  = new ImageIcon(TextEditor.class.getResource("/icons/model_16pix.png"));
+//	private static final ImageIcon ENTITY_ICON = new ImageIcon(TextEditor.class.getResource("/icons/entity_16pix.png"));
+
+	private static final ImageIcon DBCFG_ICON  = createImageIcon("/icons/dbcfg16.png");
+	private static final ImageIcon MODEL_ICON  = createImageIcon("/icons/model_16pix.png");
+	private static final ImageIcon ENTITY_ICON = createImageIcon("/icons/entity_16pix.png");
+	private static ImageIcon createImageIcon(String path) {
+		URL url = TextEditor.class.getResource(path);
+		if (url != null) {
+			return new ImageIcon(url);
+		} else {
+			throw new RuntimeException("Couldn't find icon file " + path );
+		}
+	}
+
 	private static String HOME = "" ;
 
 	private final FileManager fileManager = new FileManager();
@@ -46,14 +63,15 @@ public class TextEditor extends JFrame {
 	private final JTabbedPane tabbedPane;
 	private final JLabel bottomLabel;
 
-	// private void log(String msg) {
-	// System.out.println("LOG : " + msg);
-	// }
-
+//	 private void log(String msg) {
+//		 System.out.println("LOG : " + msg);
+//	 }
+	
 	public static String getHome() {
 		return HOME ;
 	}
 	
+			
 	public TextEditor(File home) {
 		super();
 
@@ -135,7 +153,7 @@ public class TextEditor extends JFrame {
 		// End of constructor : expose debug variables
 		DebugVariables.tabbedPane = this.tabbedPane;
 	}
-
+	
 	@Override
 	public void setVisible(final boolean visible) {
 		// // make sure that frame is marked as not disposed if it is asked to be
@@ -205,11 +223,20 @@ public class TextEditor extends JFrame {
 				// Add the new tab in the "TabbedPane" component
 //				tabbedPane.add(scrollPane.getTitle(), scrollPane);
 				
+//				tabbedPane.addTab(scrollPane.getTitle(), scrollPane);
+				Icon icon = null ;
+				String fileName =  file.getName();
+				if ( fileName.endsWith(".entity") ) {
+					icon = ENTITY_ICON ;
+				}
+				else if ( fileName.endsWith(".model") ) {
+					icon = MODEL_ICON ;
+				}
+				else if ( fileName.endsWith(".dbcfg") ) {
+					icon = DBCFG_ICON ;
+				}
+				
 				tabbedPane.addTab(scrollPane.getTitle(), scrollPane);
-//				tabbedPane.addTab(title, icon, component);
-//				tabbedPane.addTab(title, icon, component, tip);
-				// Component tab = tabbedPane.add(scrollPane.getTitle(), scrollPane);
-				// log("New tab. Class = " + tab.getClass());
 
 				int newTabIndex = tabbedPane.getTabCount() - 1;
 				
@@ -220,8 +247,8 @@ public class TextEditor extends JFrame {
 				 * A non-null value means the component will render the title and JTabbedPane will not render the title and/or icon.
 				 * Note: The component must not be one that the developer has already added to the tabbed pane.
 				 */
-//				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(tabbedPane)); // Specific TAB
-				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(this, scrollPane)); // Specific TAB
+//				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(this, scrollPane)); // Specific TAB
+				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(this, scrollPane, icon)); // Specific TAB
 				
 				TxDocumentListener documentListener = new TxDocumentListener(scrollPane);
 				textArea.setDocumentListener(documentListener);
