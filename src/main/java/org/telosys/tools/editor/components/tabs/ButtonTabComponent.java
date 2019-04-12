@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.telosys.tools.editor.components.TextEditor;
-import org.telosys.tools.editor.components.TxScrollPane;
+import org.telosys.tools.editor.components.textarea.TxScrollPane;
 
 /**
  * Component to be used as tabComponent;

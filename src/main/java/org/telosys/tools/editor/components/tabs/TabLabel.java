@@ -2,7 +2,7 @@ package org.telosys.tools.editor.components.tabs;
 
 import javax.swing.JLabel;
 
-import org.telosys.tools.editor.components.TxScrollPane;
+import org.telosys.tools.editor.components.textarea.TxScrollPane;
 
 public class TabLabel extends JLabel {
 

@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import org.telosys.tools.editor.components.TextEditor;
-import org.telosys.tools.editor.components.TxScrollPane;
+import org.telosys.tools.editor.components.textarea.TxScrollPane;
 
 /**
  * Tab "X" button used to close the current tab

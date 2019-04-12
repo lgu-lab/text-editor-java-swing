@@ -1,4 +1,4 @@
-package org.telosys.tools.editor.components;
+package org.telosys.tools.editor.components.textarea;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -11,7 +11,7 @@ import javax.swing.event.DocumentListener;
  * @author Laurent GUERIN
  *
  */
-class TxDocumentListener implements DocumentListener {
+public class TxDocumentListener implements DocumentListener {
 
 	private final TxScrollPane scrollPane ;
 

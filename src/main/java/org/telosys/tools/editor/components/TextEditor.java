@@ -22,6 +22,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.telosys.tools.editor.components.tabs.ButtonTabComponent;
+import org.telosys.tools.editor.components.textarea.TxDocumentListener;
+import org.telosys.tools.editor.components.textarea.TxScrollPane;
+import org.telosys.tools.editor.components.textarea.TxTextArea;
 
 /**
  * Text editor main frame ( JFrame specialization )

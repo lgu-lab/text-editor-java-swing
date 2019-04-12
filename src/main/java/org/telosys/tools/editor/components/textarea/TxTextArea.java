@@ -1,4 +1,4 @@
-package org.telosys.tools.editor.components;
+package org.telosys.tools.editor.components.textarea;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -46,7 +46,7 @@ public class TxTextArea extends JTextArea implements Serializable {
 //	      });
 	}
 	
-	protected void setDocumentListener( TxDocumentListener listener) {
+	public void setDocumentListener( TxDocumentListener listener) {
 		this.getDocument().addDocumentListener(listener);
 	}
 }

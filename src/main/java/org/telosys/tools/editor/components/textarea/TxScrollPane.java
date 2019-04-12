@@ -1,4 +1,4 @@
-package org.telosys.tools.editor.components;
+package org.telosys.tools.editor.components.textarea;
 
 import java.io.File;
 import java.io.Serializable;
