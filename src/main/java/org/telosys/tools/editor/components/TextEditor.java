@@ -317,11 +317,22 @@ public class TextEditor extends JFrame {
 	private JFileChooser createFileChooser(String title, String buttonText) {
 		JFileChooser.setDefaultLocale(Locale.US);
 		
-		JFileChooser fileChooser = new TxFileChooser();
+		JFileChooser fileChooser = new TxFileChooser(currentDir);
 		fileChooser.setDialogTitle(title);
 		fileChooser.setApproveButtonText(buttonText);
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fileChooser.setCurrentDirectory(currentDir);
+		
+//		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//		
+////		FileNameExtensionFilter filter;
+////		filter = new FileNameExtensionFilter("Entity", "entity");
+//		fileChooser.addChoosableFileFilter( new FileNameExtensionFilter("Entity (.entity)", "entity") );
+//		fileChooser.addChoosableFileFilter( new FileNameExtensionFilter("DSL Model (.model)", "model") );
+//		fileChooser.addChoosableFileFilter( new FileNameExtensionFilter("Template (.vm)", "vm") );
+////		filter = new FileNameExtensionFilter("Entity", "entity");
+////		FileNameExtensionFilter filter = new FileNameExtensionFilter("Template (Velocity file)", "vm");
+////		fileChooser.setFileFilter(filter);
+		
+//		fileChooser.setCurrentDirectory(currentDir);
 		return fileChooser;
 	}
 
