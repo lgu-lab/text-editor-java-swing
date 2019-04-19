@@ -8,19 +8,41 @@ import java.io.InputStreamReader;
 import org.telosys.tools.editor.TextEditorsManager;
 
 public class Main {
-
+	
+	private static String ROOT = "D:/TMP"; // Default value
+	
+	public static File getFile (String fileName) {
+		if ( ROOT.endsWith("/") ) {
+			return new File( ROOT + fileName); 
+		}
+		else {
+			return new File( ROOT + "/" + fileName); 
+		}
+	}
+	
 	public static void main(String[] args) {
-		// Open a text editor 
-//		System.out.println("1rst text editor ");
-//		new TextEditor("My title");
-//		
-//		System.out.println("2nd text editor ");
-//		new TextEditor("Second");
-//		
-//		System.out.println("All editors are running... ");
-//		
 		
-		TextEditorsManager editorsManager = new TextEditorsManager("D:/TMP");
+		if ( args.length > 1 ) {
+			String arg = args[1] ;
+			File root = new File(arg);
+			if ( root.exists() ) {
+				if ( root.isDirectory() ) {
+					ROOT = arg ;
+				}
+				else {
+					System.out.println(arg + " is not a directory ! ");
+					System.exit(2);
+				}
+			}
+			else {
+				System.out.println(arg + " doesn't exist ! ");
+				System.exit(1);
+			}
+		}
+		
+		System.out.println("ROOT directory is " + ROOT);
+		
+		TextEditorsManager editorsManager = new TextEditorsManager(ROOT);
 		
 		BufferedReader br = null;
 
@@ -36,19 +58,19 @@ public class Main {
                 String input = br.readLine();
 
                 if ("foo".equals(input)) {
-            		editorsManager.openTextEditor(new File("D:/TMP/foo.txt") );
+            		editorsManager.openTextEditor(getFile("foo.txt") );
                 }
                 if ("aaa".equals(input)) {
-            		editorsManager.openTextEditor(new File("D:/TMP/aaa.txt") );
+            		editorsManager.openTextEditor(getFile("aaa.txt") );
                 }
                 if ("bbb".equals(input)) {
-            		editorsManager.openTextEditor(new File("D:/TMP/bbb.txt") );
+            		editorsManager.openTextEditor(getFile("bbb.txt") );
                 }
-                if ("db".equals(input)) {
-            		editorsManager.openTextEditor(new File("D:/TMP/databases.dbcfg") );
+                if ("dbcfg".equals(input)) {
+            		editorsManager.openTextEditor(getFile("databases.dbcfg") );
                 }
                 if ("ccc".equals(input)) {
-            		editorsManager.openTextEditor(new File("D:/TMP/Ccc.entity") );
+            		editorsManager.openTextEditor(getFile("Ccc.entity") );
                 }
 
                 if ("q".equals(input)) {
