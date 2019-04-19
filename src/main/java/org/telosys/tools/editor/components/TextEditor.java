@@ -37,19 +37,6 @@ public class TextEditor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final ImageIcon FILE_ICON   = createImageIcon("/icons/file_16pix.png");
-	private static final ImageIcon DBCFG_ICON  = createImageIcon("/icons/dbcfg16.png");
-	private static final ImageIcon MODEL_ICON  = createImageIcon("/icons/model_16pix.png");
-	private static final ImageIcon ENTITY_ICON = createImageIcon("/icons/entity_16pix.png");
-	
-	private static ImageIcon createImageIcon(String path) {
-		URL url = TextEditor.class.getResource(path);
-		if (url != null) {
-			return new ImageIcon(url);
-		} else {
-			throw new RuntimeException("Couldn't find icon file " + path );
-		}
-	}
 
 	private static String HOME = "" ;
 
@@ -246,7 +233,7 @@ public class TextEditor extends JFrame {
 				 * Note: The component must not be one that the developer has already added to the tabbed pane.
 				 */
 //				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(this, scrollPane)); // Specific TAB
-				Icon icon = getIcon(file);
+				Icon icon = IconProvider.getIcon(file);
 				tabbedPane.setTabComponentAt(newTabIndex, new ButtonTabComponent(this, scrollPane, icon)); // Specific TAB
 				
 				TxDocumentListener documentListener = new TxDocumentListener(scrollPane);
@@ -254,15 +241,6 @@ public class TextEditor extends JFrame {
 				tabbedPane.setSelectedIndex(newTabIndex);
 			}
 		}
-	}
-	
-	private Icon getIcon(File file) {
-		String fileName =  file.getName();
-		if ( fileName.endsWith(".entity") ) return ENTITY_ICON ;
-		if ( fileName.endsWith(".model") ) return MODEL_ICON ;
-		if ( fileName.endsWith(".dbcfg") ) return DBCFG_ICON ;
-		// Default icon 
-		return FILE_ICON ;
 	}
 	
 	public void putOnFront() {
