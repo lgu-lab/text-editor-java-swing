@@ -22,8 +22,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		if ( args.length > 1 ) {
-			String arg = args[1] ;
+		System.out.println("Starting, args.length = " + args.length );
+		if ( args.length > 0 ) {
+			String arg = args[0] ;
+			System.out.println("File arg = " + arg );
 			File root = new File(arg);
 			if ( root.exists() ) {
 				if ( root.isDirectory() ) {
@@ -54,28 +56,33 @@ public class Main {
 
             while (true) {
 
-                System.out.print("Enter something : ");
+                System.out.print("Enter file name : ");
                 String input = br.readLine();
 
-                if ("foo".equals(input)) {
-            		editorsManager.openTextEditor(getFile("foo.txt") );
-                }
-                if ("aaa".equals(input)) {
-            		editorsManager.openTextEditor(getFile("aaa.txt") );
-                }
-                if ("bbb".equals(input)) {
-            		editorsManager.openTextEditor(getFile("bbb.txt") );
-                }
-                if ("dbcfg".equals(input)) {
-            		editorsManager.openTextEditor(getFile("databases.dbcfg") );
-                }
-                if ("ccc".equals(input)) {
-            		editorsManager.openTextEditor(getFile("Ccc.entity") );
-                }
+//                if ("foo".equals(input)) {
+//            		editorsManager.openTextEditor(getFile("foo.txt") );
+//                }
+//                if ("aaa".equals(input)) {
+//            		editorsManager.openTextEditor(getFile("aaa.txt") );
+//                }
+//                if ("bbb".equals(input)) {
+//            		editorsManager.openTextEditor(getFile("bbb.txt") );
+//                }
+//                if ("dbcfg".equals(input)) {
+//            		editorsManager.openTextEditor(getFile("databases.dbcfg") );
+//                }
+//                if ("ccc".equals(input)) {
+//            		editorsManager.openTextEditor(getFile("Ccc.entity") );
+//                }
 
                 if ("q".equals(input)) {
                     System.out.println("Exit!");
                     System.exit(0);
+                }
+                else {
+                	File file = getFile(input);
+                	System.out.println("Edit file " + file + "...");
+                	editorsManager.openTextEditor(file);
                 }
 
                 System.out.println("input : " + input);
